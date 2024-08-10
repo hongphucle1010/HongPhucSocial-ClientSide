@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
-import darkModeReducer from "./darkMode";
-import authorizationReducer from "./isAuthenticated";
+import authorizationReducer from "./userState";
 
 const rootReducer = combineReducers({
-  darkMode: darkModeReducer,
   userRole: authorizationReducer,
 });
 

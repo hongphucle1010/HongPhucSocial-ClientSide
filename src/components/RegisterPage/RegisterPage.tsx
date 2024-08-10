@@ -1,14 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { signUpPath } from "../../config/api/api";
 import { Label, TextInput, Button } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
+import { FaUser } from "react-icons/fa";
 import { PiPassword } from "react-icons/pi";
+import { useState } from "react";
+import { signUp } from "../../utils/authentication/authentication";
+import { SIGN_UP_SUCCESS } from "../../config/api/responseCode";
 
 const SignUpForm: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = async (event: any) => {
+    event.preventDefault();
+    const warning = document.getElementById("warning") as HTMLParagraphElement;
+    if (password !== confirmPassword) {
+      warning.innerText = "Passwords do not match";
+      return;
+    }
+    try {
+      const response = await signUp(email, username, password);
+      if (response.status === SIGN_UP_SUCCESS) {
+        window.location.href = "/";
+      } else {
+        warning.innerText = "Invalid email or password";
+      }
+    } catch (error: Error | any) {
+      warning.innerText = error.data.message;
+    }
+  };
+
   return (
     <div
       id="login-box"
-      className="rounded-xl bg-white w-5/6 px-5 py-4 shadow-2xl"
+      className="rounded-xl w-5/6 px-5 py-4 shadow-2xl shadow-slate-400"
     >
       <p id="warning"></p>
       <form action={signUpPath} className="w-full" method="POST">
@@ -19,10 +48,12 @@ const SignUpForm: React.FC = () => {
           <TextInput
             id="email"
             type="email"
-            placeholder="name@flowbite.com"
+            name="email"
+            placeholder="hongphuc@hongphuc.vn"
             icon={HiMail}
             required
             shadow
+            onChange={(event: any) => setEmail(event.target.value)}
           />
         </div>
         <div>
@@ -33,10 +64,11 @@ const SignUpForm: React.FC = () => {
             id="username"
             type="text"
             name="username"
-            placeholder="name@flowbite.com"
-            icon={HiMail}
+            placeholder="hongphucle"
+            icon={FaUser}
             required
             shadow
+            onChange={(event: any) => setUsername(event.target.value)}
           />
         </div>
         <div>
@@ -50,6 +82,7 @@ const SignUpForm: React.FC = () => {
             icon={PiPassword}
             required
             shadow
+            onChange={(event: any) => setPassword(event.target.value)}
           />
         </div>
         <div>
@@ -63,10 +96,17 @@ const SignUpForm: React.FC = () => {
             icon={PiPassword}
             required
             shadow
+            onChange={(event: any) => setConfirmPassword(event.target.value)}
           />
         </div>
         <div className="flex justify-center my-2">
-          <Button type="submit">Create account</Button>
+          <Button
+            gradientDuoTone="greenToBlue"
+            type="submit"
+            onClick={(e: any) => handleSignUp(e)}
+          >
+            Create account
+          </Button>
         </div>
       </form>
     </div>

@@ -1,185 +1,62 @@
 import styles from "./Header.module.scss";
-import { useState } from "react";
-import PropTypes from "prop-types";
-import ReactSwitch from "react-switch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon } from "@fortawesome/free-solid-svg-icons";
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "../../redux/store";
-import { toggleDarkMode } from "../../redux/reducers/darkMode";
+import { DarkThemeToggle } from "flowbite-react";
+import { Dropdown, Avatar } from "flowbite-react";
+import { Link } from "react-router-dom";
 
-interface NavItem {
-  name: string;
-  path: string;
-}
-
-const navItemArray: NavItem[] = [
-  { name: "Home", path: "/" },
-  { name: "Find friends", path: "/find" },
-  { name: "Settings", path: "/settings" },
-  { name: "Log out", path: "/logout" },
-];
-import { useNavigate } from "react-router-dom";
-
-const CloseButton: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    className="h-6 w-6"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
-
-const ThreeSlashButton: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4 6h16M4 12h16M4 18h16"
-    />
-  </svg>
-);
-
-const MySun: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    className="w-5 h-5 text-white group-hover:text-gray-500 dark:text-gray-300 dark:group-hover:text-gray-300"
-    role="img"
-    aria-labelledby="ag7g3610m2j2vg5zwj4zvvh3zomoto9y"
-  >
-    <title id="ag7g3610m2j2vg5zwj4zvvh3zomoto9y">theme icon</title>
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-    />
-  </svg>
-);
-
-interface ThemeSwitchButtonProps {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-}
-
-const ThemeSwitchButton: React.FC<ThemeSwitchButtonProps> = ({
-  darkMode,
-  toggleDarkMode,
-}) => {
-  const MoonIcon = (
-    <div
-      className="flex justify-center items-center w-full"
-      style={{
-        height: "100%",
-      }}
-    >
-      <FontAwesomeIcon icon={faMoon} className="text-white" />
-    </div>
-  );
-  const SunIcon = (
-    <div
-      className="flex justify-center items-center w-full"
-      style={{
-        height: "100%",
-      }}
-    >
-      <MySun />
-    </div>
-  );
-  return (
-    <ReactSwitch
-      checked={darkMode}
-      onChange={toggleDarkMode}
-      onColor="#334155"
-      onHandleColor="#000"
-      offColor="#52525B"
-      offHandleColor="#fff"
-      checkedIcon={MoonIcon}
-      uncheckedIcon={SunIcon}
-    />
-  );
-};
-
-const NavList: React.FC = () => (
-  <ul className={`hidden gap-4 lg:flex`}>
-    {navItemArray.map((navItem) => (
-      <li key={navItem.name} className="mx-2">
-        <a href={navItem.path}>{navItem.name}</a>
-      </li>
-    ))}
-  </ul>
-);
+import { useSelector } from "react-redux";
+import { concatFirstAndLastName } from "../../utils/functions";
+import { HiOutlineAdjustments, HiUserCircle } from "react-icons/hi";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { MdLogout } from "react-icons/md";
 
 const Header: React.FC = () => {
-  const darkMode = useSelector((state: RootState) => state.darkMode.value);
-  const dispatch = useDispatch();
-  const [openNav, setOpenNav] = useState(false);
-  const navigate = useNavigate();
-
-  const handleNavigation = (path: string) => {
-    navigate(path);
-  };
+  const user = useSelector((state: any) => state.userRole.value.user);
 
   return (
-    <div className="sticky top-0">
+    <div className="sticky top-0 z-10">
       <nav className="w-full flex h-14 p-2 items-center justify-around border-blue-500 border-b bg-white dark:bg-slate-900	dark:border-cyan-200 dark:text-slate-200">
-        <button
-          className={`${styles.header_name} h-4/5 aspect-square`}
-          onClick={() => handleNavigation("/")}
-        >
+        <Link to="/" className={`${styles.header_name} h-4/5 aspect-square`}>
           <img src="/logo.png" />
-        </button>
-        <NavList />
-        <ThemeSwitchButton
-          darkMode={darkMode}
-          toggleDarkMode={() => dispatch(toggleDarkMode())}
-        />
-        <button
-          className="h-6 w-6 lg:hidden"
-          onClick={() => setOpenNav(!openNav)}
+        </Link>
+        <DarkThemeToggle />
+        <Dropdown
+          label={
+            <Avatar
+              img={user.profile?.avatarUrl ? user.profile.avatarUrl : ""}
+              rounded
+            />
+          }
+          arrowIcon={false}
+          className={`shadow-md shadow-slate-200 z-10`}
+          inline
         >
-          {openNav ? <CloseButton /> : <ThreeSlashButton />}
-        </button>
+          <Dropdown.Header className="flex items-center gap-2">
+            <HiUserCircle />
+            <span className="block text-sm">
+              <Link to="/profile">
+                {user.profile?.firstName && user.profile?.lastName
+                  ? concatFirstAndLastName(
+                      user.profile.firstName ?? "",
+                      user.profile.lastName ?? ""
+                    ) || user.username
+                  : user.username}
+              </Link>
+            </span>
+          </Dropdown.Header>
+          <Dropdown.Item icon={HiOutlineAdjustments}>
+            <Link to="/settings">Settings</Link>
+          </Dropdown.Item>
+          <Dropdown.Item icon={FaPeopleGroup}>
+            <Link to="/find-friends">Find friends</Link>
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item icon={MdLogout}>
+            <Link to="/logout">Log out</Link>
+          </Dropdown.Item>
+        </Dropdown>
       </nav>
-      {openNav ? (
-        <div className={`w-full absolute ${styles.myAnimation}`}>
-          {navItemArray.map((navItem) => (
-            <div
-              key={navItem.name}
-              className=" flex h-14 p-2 items-center justify-around bg-pink-200	opacity-90 hover:bg-green-200 hover:cursor-pointer dark:bg-slate-700 dark:text-slate-200"
-            >
-              <button onClick={() => handleNavigation(navItem.path)}>
-                {navItem.name}
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <> </>
-      )}
     </div>
   );
 };
 
 export default Header;
-
-NavList.propTypes = {
-  hidden: PropTypes.bool,
-};

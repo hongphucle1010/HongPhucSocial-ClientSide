@@ -5,7 +5,9 @@ import styles from "./GuestLayout.module.scss";
 
 const GuestLayout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className={`min-h-screen ${styles.myBackground}`}>
+    <div
+      className={`min-h-screen dark:bg-slate-800 dark:text-slate-100 ${styles.myBackground}`}
+    >
       {children}
       <Outlet />
     </div>

@@ -1,18 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.scss";
-import { logInPath } from "../../config/api/api";
 import { Label, TextInput, Button } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
 import { PiPassword } from "react-icons/pi";
+import { logIn } from "../../utils/authentication/authentication";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { LOG_IN_SUCCESS } from "../../config/api/responseCode";
 
 const LoginForm: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (event: any) => {
+    event.preventDefault();
+    const warning = document.getElementById("warning") as HTMLParagraphElement;
+    try {
+      const response = await logIn(email, password, dispatch);
+      if (response.status === LOG_IN_SUCCESS) {
+        window.location.href = "/";
+      } else {
+        warning.innerText = "Invalid email or password";
+      }
+    } catch (error: Error | any) {
+      warning.innerText = error.data.message;
+    }
+  };
+
   return (
     <div
       id="login-box"
-      className="rounded-xl bg-white w-5/6 px-5 py-4 shadow-2xl"
+      className="rounded-xl w-5/6 px-5 py-4 shadow-2xl shadow-slate-400"
     >
       <p id="warning"></p>
-      <form action={logInPath} className="w-full" method="POST">
+      <form className="w-full" method="POST">
         <div>
           <div className="mb-2 block">
             <Label htmlFor="email" value="Your email" />
@@ -20,10 +44,12 @@ const LoginForm: React.FC = () => {
           <TextInput
             id="email"
             type="email"
-            placeholder="name@flowbite.com"
+            name="email"
+            placeholder="hongphuc@hongphuc.vn"
             icon={HiMail}
             required
             shadow
+            onChange={(event: any) => setEmail(event.target.value)}
           />
         </div>
         <div>
@@ -33,13 +59,21 @@ const LoginForm: React.FC = () => {
           <TextInput
             id="password"
             type="password"
+            name="password"
             icon={PiPassword}
             required
             shadow
+            onChange={(event: any) => setPassword(event.target.value)}
           />
         </div>
         <div className="flex justify-center my-2">
-          <Button type="submit">Log in</Button>
+          <Button
+            gradientDuoTone="greenToBlue"
+            type="submit"
+            onClick={(event: any) => handleLogin(event)}
+          >
+            Log in
+          </Button>
         </div>
       </form>
       <div className="w-full flex justify-center border-t pt-2 mt-2">

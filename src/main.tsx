@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { Flowbite } from "flowbite-react";
 import "./index.css";
+import "flowbite";
 
 const { store, persistor } = configurePersistedStore();
 

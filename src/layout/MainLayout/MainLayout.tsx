@@ -9,7 +9,7 @@ import { LayoutProps } from "../../types/layout.tsx";
 const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div
-      className={`dark:bg-slate-800 dark:text-slate-100 ${styles["transition-bg-text"]} min-h-screen`}
+      className={`pb-24 dark:bg-slate-800 dark:text-slate-100 ${styles["transition-bg-text"]} min-h-screen`}
     >
       <Header />
       {children}
