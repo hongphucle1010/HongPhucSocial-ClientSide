@@ -5,6 +5,18 @@
 
 body {
   font-family: "Inter", sans-serif;
+  cursor: url(https://cdn.custom-cursor.com/db/cursor/32/Bongo_Cat_Cursor.png),
+    default !important;
+}
+
+button {
+  cursor: url(https://cdn.custom-cursor.com/db/pointer/32/Bongo_Cat_Pointer.png),
+    pointer !important;
+}
+
+.myPointer {
+  cursor: url(https://cdn.custom-cursor.com/db/pointer/32/Bongo_Cat_Pointer.png),
+    pointer !important;
 }
 
 .myTransition {

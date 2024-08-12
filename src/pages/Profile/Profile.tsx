@@ -20,7 +20,7 @@ const enum FriendshipStatus {
 
 const Profile = () => {
   const currentUser = useSelector((state: any) => state.userRole.value.user);
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const { username } = useParams();
 
   const [user, setUser] = useState(null as any);
@@ -31,13 +31,13 @@ const Profile = () => {
     <Button
       className="w-5/12 max-w-40"
       gradientMonochrome="purple"
-      onClick={() => navigation("/settings")}
+      onClick={() => navigate("/settings")}
     >
       Edit profile
     </Button>
   );
 
-  const ButtonGroup = ({ first, second, dropdown }: any) => {
+  const ButtonGroup = ({ first, second, dropdown, userId }: any) => {
     console.log(dropdown);
     return (
       <>
@@ -56,7 +56,11 @@ const Profile = () => {
           ))}
         </Dropdown>
 
-        <Button className="w-36 sm:w-40" color="light">
+        <Button
+          className="w-36 sm:w-40"
+          color="light"
+          onClick={() => navigate(`/message/${userId}`)}
+        >
           {second}
         </Button>
       </>
@@ -116,7 +120,7 @@ const Profile = () => {
         })
         .catch((e) => {
           console.error(e);
-          navigation("/404");
+          navigate("/404");
         });
     }
   }, [username]);
@@ -152,6 +156,7 @@ const Profile = () => {
               first={buttonGroupAction[friendStatus][0]}
               second="Message"
               dropdown={buttonGroupAction[friendStatus][1]}
+              userId={user.profile.userId}
             />
           )}
         </div>

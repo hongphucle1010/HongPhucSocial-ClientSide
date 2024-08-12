@@ -7,6 +7,9 @@ import { Provider } from "react-redux";
 import { Flowbite } from "flowbite-react";
 import "./index.css";
 import "flowbite";
+import { connectSocket } from "./socket.io";
+
+connectSocket();
 
 const { store, persistor } = configurePersistedStore();
 

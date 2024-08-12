@@ -6,17 +6,20 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { concatFirstAndLastName } from "../../utils/functions";
 import { HiOutlineAdjustments, HiUserCircle } from "react-icons/hi";
-import { FaPeopleGroup } from "react-icons/fa6";
+import { FaArrowLeft, FaPeopleGroup } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
 
-const Header: React.FC = () => {
+const FixedHeader: React.FC = () => {
   const user = useSelector((state: any) => state.userRole.value.user);
 
   return (
-    <div className="sticky w-full top-0 z-10">
+    <div className="fixed w-full top-0 z-10">
       <nav className="w-full flex h-14 p-2 items-center justify-around border-blue-500 border-b bg-white dark:bg-slate-900	dark:border-cyan-200 dark:text-slate-200">
-        <Link to="/" className={`${styles.header_name} h-4/5 aspect-square myPointer`}>
-          <img src="/logo.png" />
+        <Link
+          to="/message"
+          className={`${styles.header_name} aspect-square p-2 rounded-full active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 transition-transform myPointer`}
+        >
+          <FaArrowLeft />
         </Link>
         <DarkThemeToggle />
         <Dropdown
@@ -59,4 +62,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default FixedHeader;

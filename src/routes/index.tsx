@@ -12,6 +12,9 @@ import type { RootState } from "../redux/store";
 import LogOut from "../components/LogOut/LogOut";
 import UserSettings from "../pages/UserSettings/UserSettings";
 import Profile from "../pages/Profile/Profile";
+import Message from "../pages/Message/Message";
+import MessageLayout from "../layout/MessageLayout/MessageLayout";
+import ChatList from "../pages/Message";
 
 const Router: React.FC = () => {
   const userRole = useSelector((state: RootState) => state.userRole.value).role;
@@ -59,6 +62,27 @@ const Router: React.FC = () => {
       element: (
         <MainLayout>
           <UserSettings />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/message",
+      element: (
+        <MainLayout>
+          <ChatList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/message/:id",
+      element: (
+        <MessageLayout>
+          <Message />
+        </MessageLayout>
+      ),
+      errorElement: (
+        <MainLayout>
+          <ErrorPage />
         </MainLayout>
       ),
     },

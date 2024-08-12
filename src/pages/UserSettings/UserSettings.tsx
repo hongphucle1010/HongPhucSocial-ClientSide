@@ -21,7 +21,7 @@ const Title = (props: any) => {
       <h2 className="text-xl font-bold">{props.title}</h2>
       <FaEdit
         onClick={() => props.setOpenModal(true)}
-        className="cursor-pointer"
+        className="myPointer"
       />
     </div>
   );
