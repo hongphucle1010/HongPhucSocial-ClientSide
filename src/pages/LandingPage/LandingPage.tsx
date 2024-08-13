@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.scss";
-import { Label, TextInput, Button } from "flowbite-react";
+import { Label, TextInput, Button, Spinner } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
 import { PiPassword } from "react-icons/pi";
 import { logIn } from "../../utils/authentication/authentication";
@@ -15,8 +15,13 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loginBtnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
+
   const handleLogin = async (event: any) => {
     event.preventDefault();
+    setLoginBtnText(
+      <Spinner color="info" aria-label="Purple spinner example" />
+    );
     const warning = document.getElementById("warning") as HTMLParagraphElement;
     try {
       const response = await logIn(email, password, dispatch);
@@ -25,8 +30,10 @@ const LoginForm: React.FC = () => {
       } else {
         warning.innerText = "Invalid email or password";
       }
+      setLoginBtnText(<span>Log in</span>);
     } catch (error: Error | any) {
       warning.innerText = error.data.message;
+      setLoginBtnText(<span>Log in</span>);
     }
   };
 
@@ -72,7 +79,7 @@ const LoginForm: React.FC = () => {
             type="submit"
             onClick={(event: any) => handleLogin(event)}
           >
-            Log in
+            {loginBtnText}
           </Button>
         </div>
       </form>

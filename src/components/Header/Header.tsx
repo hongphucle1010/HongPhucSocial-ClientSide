@@ -1,7 +1,7 @@
 import styles from "./Header.module.scss";
 import { DarkThemeToggle } from "flowbite-react";
 import { Dropdown, Avatar } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { concatFirstAndLastName } from "../../utils/functions";
@@ -11,6 +11,7 @@ import { MdLogout } from "react-icons/md";
 
 const Header: React.FC = () => {
   const user = useSelector((state: any) => state.userRole.value.user);
+  const navigate = useNavigate();
 
   return (
     <div className="sticky w-full top-0 z-10">
@@ -33,31 +34,43 @@ const Header: React.FC = () => {
           className={`shadow-md shadow-slate-200 z-10`}
           inline
         >
-          <Dropdown.Header className="flex items-center gap-2">
+          <Dropdown.Header
+            className="flex items-center gap-2"
+            onClick={() => navigate("/profile")}
+          >
             <HiUserCircle />
             <span className="block text-sm">
-              <Link to="/profile">
+              <span className="cursor-pointer">
                 {user.profile?.firstName && user.profile?.lastName
                   ? concatFirstAndLastName(
                       user.profile.firstName ?? "",
                       user.profile.lastName ?? ""
                     ) || user.username
                   : user.username}
-              </Link>
+              </span>
             </span>
           </Dropdown.Header>
-          <Dropdown.Item icon={HiOutlineAdjustments}>
-            <Link to="/settings">Settings</Link>
+          <Dropdown.Item
+            icon={HiOutlineAdjustments}
+            onClick={() => navigate("/settings")}
+          >
+            Settings
           </Dropdown.Item>
-          <Dropdown.Item icon={FaUsersViewfinder}>
-            <Link to="/find-friends">Find friends</Link>
+          <Dropdown.Item
+            icon={FaUsersViewfinder}
+            onClick={() => navigate("/find-friends")}
+          >
+            Find friends
           </Dropdown.Item>
-          <Dropdown.Item icon={FaPeopleGroup}>
-            <Link to="/friends">Friends</Link>
+          <Dropdown.Item
+            icon={FaPeopleGroup}
+            onClick={() => navigate("/friends")}
+          >
+            Friends
           </Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item icon={MdLogout}>
-            <Link to="/logout">Log out</Link>
+          <Dropdown.Item icon={MdLogout} onClick={() => navigate("/logout")}>
+            Log out
           </Dropdown.Item>
         </Dropdown>
       </nav>
