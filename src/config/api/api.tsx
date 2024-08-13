@@ -1,5 +1,9 @@
-export const apiHost = "http://localhost:3000/api/v1";
-export const socketHost = "http://localhost:3000";
+import dotenv from "dotenv";
+dotenv.config();
+const host = process.env.HOST || "http://localhost:3000";
+
+export const apiHost = `${host}/api/v1`;
+export const socketHost = host;
 
 // Authentication
 export const logInPath = "/auth/login";
