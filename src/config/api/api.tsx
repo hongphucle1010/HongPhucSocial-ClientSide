@@ -1,4 +1,4 @@
-const host = import.meta.env.VITE_HOST || "http://localhost:3000";
+const host = import.meta.env.VITE_HOST || "https://peaceful-melli-hongphucle-2e1bb2e3.koyeb.app";
 
 export const apiHost = `${host}/api/v1`;
 export const socketHost = host;
