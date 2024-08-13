@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-const host = process.env.HOST || "http://localhost:3000";
+const host = import.meta.env.VITE_HOST || "http://localhost:3000";
 
 export const apiHost = `${host}/api/v1`;
 export const socketHost = host;
