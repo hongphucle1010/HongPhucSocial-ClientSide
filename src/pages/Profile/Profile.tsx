@@ -9,6 +9,7 @@ import {
   makeFriendshipRequestApi,
 } from "../../api/friendship";
 import { DELETE_FRIENDSHIP_SUCCESS } from "../../config/api/responseCode";
+import QRCodeComponent from "../../components/qrCode";
 
 const enum FriendshipStatus {
   none = "none",
@@ -27,15 +28,32 @@ const Profile = () => {
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [friendStatus, setFriendStatus] = useState(FriendshipStatus.none);
 
-  const CurrentUserButton = () => (
-    <Button
-      className="w-5/12 max-w-40"
-      gradientMonochrome="purple"
-      onClick={() => navigate("/settings")}
-    >
-      Edit profile
-    </Button>
-  );
+  const CurrentUserButton = () => {
+    const [openModal, setOpenModal] = useState(false);
+    return (
+      <>
+        <Button
+          className="w-5/12 max-w-40"
+          gradientMonochrome="purple"
+          onClick={() => navigate("/settings")}
+        >
+          Edit profile
+        </Button>
+        <Button
+          className="w-5/12 max-w-40"
+          color="light"
+          onClick={() => setOpenModal(true)}
+        >
+          My QR code
+        </Button>
+        <QRCodeComponent
+          value={currentUser.username}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
+      </>
+    );
+  };
 
   const ButtonGroup = ({ first, second, dropdown, userId }: any) => {
     console.log(dropdown);

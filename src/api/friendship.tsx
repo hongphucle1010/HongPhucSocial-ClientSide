@@ -23,3 +23,13 @@ export async function deleteFriendshipRequestApi(requesteeId: number) {
     throw error;
   }
 }
+
+export async function getFriendsListApi() {
+  try {
+    const response = await apiClient.get(`/friendship/list`);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

@@ -31,7 +31,7 @@ const ChatList = () => {
       {contactList.map((contact) => (
         <div
           key={contact.userId}
-          className="flex w-full p-3 gap-3 active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 transition-transform myPointer"
+          className="flex w-full p-3 gap-3 active:scale-95 active:rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-all myPointer"
           onClick={() => navigate(`/message/${contact.userId}`)}
         >
           <Avatar img={contact.avatarUrl} rounded />

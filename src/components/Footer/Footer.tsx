@@ -1,5 +1,6 @@
 // import styles from "./Footer.module.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "flowbite";
 
 import { useNavigate } from "react-router-dom";
 

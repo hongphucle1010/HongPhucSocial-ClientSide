@@ -15,6 +15,7 @@ import Profile from "../pages/Profile/Profile";
 import Message from "../pages/Message/Message";
 import MessageLayout from "../layout/MessageLayout/MessageLayout";
 import ChatList from "../pages/Message";
+import FriendsList from "../pages/Friends";
 
 const Router: React.FC = () => {
   const userRole = useSelector((state: RootState) => state.userRole.value).role;
@@ -87,8 +88,21 @@ const Router: React.FC = () => {
       ),
     },
     {
+      path: "/friends",
+      element: (
+        <MainLayout>
+          <FriendsList />
+        </MainLayout>
+      ),
+    },
+    {
       path: "*",
       element: (
+        <MainLayout>
+          <ErrorPage />
+        </MainLayout>
+      ),
+      errorElement: (
         <MainLayout>
           <ErrorPage />
         </MainLayout>
