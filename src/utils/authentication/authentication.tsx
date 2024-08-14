@@ -4,7 +4,7 @@ import {
   logInReducer,
   logOutReducer,
   Authorization,
-} from "../../redux/reducers/userState";
+} from "../../lib/redux/reducers/userState";
 
 export function setToken(token: string) {
   console.log("Set token: ", token);

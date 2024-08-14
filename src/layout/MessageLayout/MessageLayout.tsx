@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styles from "../MainLayout/MainLayout.module.scss";
-import { LayoutProps } from "../../types/layout.tsx";
+import { LayoutProps } from "../../lib/types/layout.tsx";
 import FixedHeader from "../../components/FixedHeader/Header.tsx";
 
 const MessageLayout: React.FC<LayoutProps> = ({ children }) => {

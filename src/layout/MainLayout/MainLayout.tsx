@@ -4,7 +4,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer.tsx";
 import PropTypes from "prop-types";
 import styles from "./MainLayout.module.scss";
-import { LayoutProps } from "../../types/layout.tsx";
+import { LayoutProps } from "../../lib/types/layout.tsx";
 
 const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   return (

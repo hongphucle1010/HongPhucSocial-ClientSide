@@ -4,7 +4,7 @@ import {
   Authorization,
   logInReducer,
   updateAvatar,
-} from "../../redux/reducers/userState";
+} from "../../lib/redux/reducers/userState";
 
 export async function updateUserWithProfile(user: any, dispatch: any) {
   try {
