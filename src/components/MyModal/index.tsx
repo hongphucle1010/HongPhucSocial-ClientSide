@@ -1,4 +1,14 @@
-import { Button, Modal } from "flowbite-react";
+import { Button, Modal, Spinner } from "flowbite-react";
+import { useLoadingSpinner } from "../../hooks/loadingSpinner";
+
+type MyModalProps = {
+  header: string;
+  body: any;
+  handleChange: () => Promise<void>;
+  handleDecline: () => void;
+  openModal: boolean;
+  setOpenModal: (open: boolean) => void;
+};
 
 const MyModal = ({
   header,
@@ -7,20 +17,26 @@ const MyModal = ({
   handleDecline,
   openModal,
   setOpenModal,
-}: any) => {
+}: MyModalProps) => {
+  const [btnText, toggleLoading] = useLoadingSpinner(
+    <span>Change</span>,
+    <Spinner color="info" />
+  );
   return (
     <Modal show={openModal} onClose={() => setOpenModal(false)}>
       <Modal.Header>{header}</Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer className="flex justify-around">
         <Button
-          onClick={() => {
-            handleChange();
+          onClick={async () => {
+            toggleLoading();
+            await handleChange();
+            toggleLoading();
             setOpenModal(false);
           }}
           gradientDuoTone="greenToBlue"
         >
-          Change
+          {btnText}
         </Button>
         <Button
           color="failure"
