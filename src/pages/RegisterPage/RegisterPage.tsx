@@ -8,6 +8,7 @@ import { PiPassword } from "react-icons/pi";
 import { useState } from "react";
 import { signUp } from "../../utils/authentication/authentication";
 import { SIGN_UP_SUCCESS } from "../../config/api/responseCode";
+import { useLoadingSpinner } from "../../hooks/loadingSpinner";
 
 const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -15,13 +16,15 @@ const SignUpForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [signupBtnText, setSignupBtnText] = useState<any>(<span>Sign up</span>);
+  const normalText = <span>Sign up</span>;
+  const [signUpBtnText, toggleLoading] = useLoadingSpinner(
+    normalText,
+    <Spinner color="info" />
+  );
 
   const handleSignUp = async (event: any) => {
     event.preventDefault();
-    setSignupBtnText(
-      <Spinner color="info" aria-label="Purple spinner example" />
-    );
+    toggleLoading();
     const warning = document.getElementById("warning") as HTMLParagraphElement;
     if (password !== confirmPassword) {
       warning.innerText = "Passwords do not match";
@@ -33,12 +36,11 @@ const SignUpForm: React.FC = () => {
         window.location.href = "/";
       } else {
         warning.innerText = "Invalid email or password";
-        setSignupBtnText(<span>Sign up</span>);
       }
-      setSignupBtnText(<span>Log in</span>);
     } catch (error: Error | any) {
       warning.innerText = error.data.message;
-      setSignupBtnText(<span>Sign up</span>);
+    } finally {
+      toggleLoading();
     }
   };
 
@@ -113,7 +115,7 @@ const SignUpForm: React.FC = () => {
             type="submit"
             onClick={(e: any) => handleSignUp(e)}
           >
-            {signupBtnText}
+            {signUpBtnText}
           </Button>
         </div>
       </form>

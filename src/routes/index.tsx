@@ -2,7 +2,7 @@ import LandingPage from "../pages/LandingPage/LandingPage";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
 import MainLayout from "../layout/MainLayout/MainLayout";
 import GuestLayout from "../layout/GuestLayout/GuestLayout";
-import RegisterPage from "../components/RegisterPage/RegisterPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import Content from "../pages/Content/Content";
 // import ForgotPasswordPage from "../components/ForgotPasswordPage/ForgotPasswordPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

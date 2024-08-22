@@ -8,6 +8,7 @@ import { logIn } from "../../utils/authentication/authentication";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { LOG_IN_SUCCESS } from "../../config/api/responseCode";
+import { useLoadingSpinner } from "../../hooks/loadingSpinner";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,15 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginBtnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
+  // const [loginBtnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
+  const [loginBtnText, toggleLoading] = useLoadingSpinner(
+    <span>Log in</span>,
+    <Spinner color="info" />
+  );
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
-    setLoginBtnText(
-      <Spinner color="info" aria-label="Purple spinner example" />
-    );
+    toggleLoading();
     const warning = document.getElementById("warning") as HTMLParagraphElement;
     try {
       const response = await logIn(email, password, dispatch);
@@ -30,10 +33,10 @@ const LoginForm: React.FC = () => {
       } else {
         warning.innerText = "Invalid email or password";
       }
-      setLoginBtnText(<span>Log in</span>);
     } catch (error: Error | any) {
       warning.innerText = error.data.message;
-      setLoginBtnText(<span>Log in</span>);
+    } finally {
+      toggleLoading();
     }
   };
 
