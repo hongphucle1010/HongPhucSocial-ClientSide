@@ -8,7 +8,7 @@ import {
   deleteFriendshipRequestApi,
   makeFriendshipRequestApi,
 } from "../../api/friendship";
-import { DELETE_FRIENDSHIP_SUCCESS } from "../../config/api/responseCode";
+import { DELETE_FRIENDSHIP_SUCCESS } from "../../config/responseCode";
 import QRCodeComponent from "../../components/qrCode";
 
 const enum FriendshipStatus {

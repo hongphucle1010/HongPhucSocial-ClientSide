@@ -1,4 +1,4 @@
-import { getStatusPath, logInPath, signUpPath } from "../config/api/api";
+import { getStatusPath, logInPath, signUpPath } from "../config/apiPath";
 import { getToken } from "../utils/authentication/authentication";
 import { apiClient } from ".";
 

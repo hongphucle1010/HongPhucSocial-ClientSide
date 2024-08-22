@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
-import { socketHost } from "../config/api/api";
+import { socketHost } from "../config/apiPath";
+import { SOCKET_CONNECT, SOCKET_DISCONNECT } from "../config/socketSignal";
 
 export const socket = io(socketHost, {
   autoConnect: true,
@@ -15,11 +16,11 @@ export const socket = io(socketHost, {
 });
 
 export function connectSocket() {
-  socket.on("connect", () => {
+  socket.on(SOCKET_CONNECT, () => {
     console.log("Connected to socket.io server");
   });
 
-  socket.on("disconnect", () => {
+  socket.on(SOCKET_DISCONNECT, () => {
     console.log("Disconnected from socket.io server");
   });
 }

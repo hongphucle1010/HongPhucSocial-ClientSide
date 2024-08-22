@@ -1,5 +1,5 @@
 import { apiClient } from ".";
-import { contactListPath, messagePath } from "../config/api/api";
+import { contactListPath, messagePath } from "../config/apiPath";
 
 export async function getChatList() {
   return apiClient.get(contactListPath);

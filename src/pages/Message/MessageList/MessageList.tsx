@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getChatList } from "../../api/message";
+import { getChatList } from "../../../api/message";
 import { Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import MyLoading from "../../components/MyLoading";
+import MyLoading from "../../../components/MyLoading";
 
 interface ChatListProfile {
   userId: number;

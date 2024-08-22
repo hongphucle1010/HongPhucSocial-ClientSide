@@ -1,5 +1,5 @@
 import { updateUserPasswordApi } from "../../api/user";
-import { UPDATE_PASSWORD_SUCCESS } from "../../config/api/responseCode";
+import { UPDATE_PASSWORD_SUCCESS } from "../../config/responseCode";
 
 export async function updatePassword(password: string, newPassword: string) {
   try {

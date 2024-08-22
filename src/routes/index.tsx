@@ -1,8 +1,8 @@
 import LandingPage from "../pages/LandingPage/LandingPage";
-import ErrorPage from "../components/ErrorPage/ErrorPage";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import MainLayout from "../layout/MainLayout/MainLayout";
 import GuestLayout from "../layout/GuestLayout/GuestLayout";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import RegisterPage from "../pages/RegisterPage";
 import Content from "../pages/Content/Content";
 // import ForgotPasswordPage from "../components/ForgotPasswordPage/ForgotPasswordPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,11 +10,11 @@ import { Authorization } from "../lib/redux/reducers/userState";
 import { useSelector } from "react-redux";
 import type { RootState } from "../lib/redux/store";
 import LogOut from "../components/LogOut/LogOut";
-import UserSettings from "../pages/UserSettings/UserSettings";
+import UserSettings from "../pages/UserSettings";
 import Profile from "../pages/Profile/Profile";
-import Message from "../pages/Message/Message";
+import Message from "../pages/Message/MessageChat/Message";
 import MessageLayout from "../layout/MessageLayout/MessageLayout";
-import ChatList from "../pages/Message";
+import ChatList from "../pages/Message/MessageList/MessageList";
 import FriendsList from "../pages/Friends";
 
 const Router: React.FC = () => {
