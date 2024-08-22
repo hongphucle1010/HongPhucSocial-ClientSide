@@ -14,8 +14,8 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [loginBtnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
-  const [loginBtnText, toggleLoading] = useLoadingSpinner(
+  // const [btnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
+  const {btnText, toggleLoading} = useLoadingSpinner(
     <span>Log in</span>,
     <Spinner color="info" />
   );
@@ -80,7 +80,7 @@ const LoginForm: React.FC = () => {
             type="submit"
             onClick={(event: any) => handleLogin(event)}
           >
-            {loginBtnText}
+            {btnText}
           </Button>
         </div>
       </form>

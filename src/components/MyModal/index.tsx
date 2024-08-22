@@ -18,7 +18,7 @@ const MyModal = ({
   openModal,
   setOpenModal,
 }: MyModalProps) => {
-  const [btnText, toggleLoading] = useLoadingSpinner(
+  const { btnText, toggleLoading, isLoading } = useLoadingSpinner(
     <span>Change</span>,
     <Spinner color="info" />
   );
@@ -33,8 +33,10 @@ const MyModal = ({
             await handleChange();
             toggleLoading();
             setOpenModal(false);
+            handleDecline();
           }}
           gradientDuoTone="greenToBlue"
+          disabled={isLoading}
         >
           {btnText}
         </Button>

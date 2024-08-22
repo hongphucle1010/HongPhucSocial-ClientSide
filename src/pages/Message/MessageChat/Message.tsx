@@ -3,20 +3,15 @@ import { concatFirstAndLastName } from "../../../utils/functions";
 import { useParams } from "react-router-dom";
 import { getMessages } from "../../../api/message";
 import { useSelector } from "react-redux";
-import { joinMessageRoom } from "../../../socket.io/message";
+import { joinMessageRoom, leaveMessageRoom } from "../../../socket.io/message";
 import { socket } from "../../../socket.io";
 import ScrollToBottomButton from "../../../components/ScrollToBottomButton";
 import { LeftMessageElement, RightMessageElement } from "./MessageElement";
 import MessageTypingArea from "./MessageTypingArea";
 import { SOCKET_RECEIVE_MESSAGE } from "../../../config/socketSignal";
+import { MessageObject } from "../types";
 
-interface MessageObject {
-  id: number;
-  senderId: number;
-  receiverId: number;
-  content: string;
-  createdAt: Date;
-}
+
 
 // Fake fetch function
 // const fetchOlderMessages = () => {
@@ -82,6 +77,7 @@ export default function Message() {
         chatBox.removeEventListener("scroll", handleScroll);
       }
       socket.off(SOCKET_RECEIVE_MESSAGE, processReceiveMessage);
+      leaveMessageRoom(currentUser.id, userId);
     };
   }, []);
 

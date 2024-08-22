@@ -15,7 +15,7 @@ const SignUpForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const normalText = <span>Sign up</span>;
-  const [signUpBtnText, toggleLoading] = useLoadingSpinner(
+  const {btnText, toggleLoading} = useLoadingSpinner(
     normalText,
     <Spinner color="info" />
   );
@@ -113,7 +113,7 @@ const SignUpForm: React.FC = () => {
             type="submit"
             onClick={(e: any) => handleSignUp(e)}
           >
-            {signUpBtnText}
+            {btnText}
           </Button>
         </div>
       </form>

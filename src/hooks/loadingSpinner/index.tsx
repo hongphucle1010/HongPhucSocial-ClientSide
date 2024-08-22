@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-type UseLoadingSpinner = [JSX.Element, () => void];
+type UseLoadingSpinner = {
+  btnText: JSX.Element;
+  toggleLoading: () => void;
+  isLoading: boolean;
+};
 
 export const useLoadingSpinner = (
   normalState: JSX.Element,
@@ -10,9 +14,11 @@ export const useLoadingSpinner = (
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const toggleLoading = () => {
-    setBtnText(isLoading ? normalState : loadingState);
-    setIsLoading(!isLoading);
+    setIsLoading((prev) => {
+      setBtnText(prev ? normalState : loadingState);
+      return !prev;
+    });
   };
 
-  return [btnText, toggleLoading];
+  return { btnText, toggleLoading, isLoading };
 };
