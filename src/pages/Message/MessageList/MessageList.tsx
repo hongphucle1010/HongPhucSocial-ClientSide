@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getChatList } from "../../../api/message";
 import { Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
@@ -19,37 +19,46 @@ const ChatList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const processReceiveMessage = (message: MessageObject) => {
-    // Create a new list by mapping over the contactList
-    const newMessageList: ChatListProfile[] = contactList.map(
-      (contact: ChatListProfile) => {
-        if (contact.userId === message.senderId) {
-          // If the contact matches the sender, update the content and createdAt
-          return {
-            ...contact,
-            content: message.content,
-            createdAt: message.createdAt,
-          };
+  const processReceiveMessage = useCallback(
+    (message: MessageObject) => {
+      const newMessageList: ChatListProfile[] = contactList.map(
+        (contact: ChatListProfile) => {
+          if (contact.userId === message.senderId) {
+            // If the contact matches the sender, update the content and createdAt
+            return {
+              ...contact,
+              content: message.content,
+              createdAt: message.createdAt,
+            };
+          }
+          // Otherwise, return the contact as it is
+          return contact;
         }
-        // Otherwise, return the contact as it is
-        return contact;
-      }
-    );
+      );
 
-    // Move the updated contact to the beginning of the list
-    const updatedContactIndex = newMessageList.findIndex(
-      (contact) => contact.userId === message.senderId
-    );
-    if (updatedContactIndex !== -1) {
-      const [updatedContact] = newMessageList.splice(updatedContactIndex, 1);
-      newMessageList.unshift(updatedContact);
-    }
-    // Set the updated list as the new state
-    setContactList(newMessageList);
-  };
+      // Move the updated contact to the beginning of the list
+      const updatedContactIndex = newMessageList.findIndex(
+        (contact) => contact.userId === message.senderId
+      );
+      if (updatedContactIndex !== -1) {
+        const [updatedContact] = newMessageList.splice(updatedContactIndex, 1);
+        newMessageList.unshift(updatedContact);
+      }
+      // Set the updated list as the new state
+      setContactList(newMessageList);
+    },
+    [contactList]
+  );
+
+  useEffect(() => {
+    console.log("Contact list changed: ", contactList);
+  }, [contactList]);
 
   useEffect(() => {
     joinMessageListRoom(currentUser.id);
+  }, [currentUser.id]);
+
+  useEffect(() => {
     getChatList()
       .then((response) => {
         setContactList(response.data ?? []);
@@ -58,16 +67,15 @@ const ChatList = () => {
       .catch((error) => {
         console.error(error);
       });
+  }, []);
+
+  useEffect(() => {
     socket.on(SOCKET_RECEIVE_MESSAGE, processReceiveMessage);
     return () => {
       socket.off(SOCKET_RECEIVE_MESSAGE, processReceiveMessage);
       leaveMessageListRoom(currentUser.id);
     };
-  }, []);
-
-  useEffect(() => {
-    console.log(contactList);
-  }, [contactList]);
+  }, [processReceiveMessage, currentUser.id]);
 
   const ContactList: React.FC = () => {
     return isLoading ? (

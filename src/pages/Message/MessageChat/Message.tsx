@@ -11,8 +11,6 @@ import MessageTypingArea from "./MessageTypingArea";
 import { SOCKET_RECEIVE_MESSAGE } from "../../../config/socketSignal";
 import { MessageObject } from "../types";
 
-
-
 // Fake fetch function
 // const fetchOlderMessages = () => {
 //   return new Promise<void>((resolve) => {
@@ -53,16 +51,6 @@ export default function Message() {
   };
 
   useEffect(() => {
-    joinMessageRoom(currentUser.id, userId);
-    getMessages(userId)
-      .then((response) => {
-        setMessageList(response.data.messageList);
-        setUserProfile(response.data.userProfile);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
     const processReceiveMessage = (message: MessageObject) => {
       console.log("Message received: ", message);
       setMessageList((prev) => [...prev, message]);
@@ -77,9 +65,23 @@ export default function Message() {
         chatBox.removeEventListener("scroll", handleScroll);
       }
       socket.off(SOCKET_RECEIVE_MESSAGE, processReceiveMessage);
-      leaveMessageRoom(currentUser.id, userId);
     };
   }, []);
+
+  useEffect(() => {
+    joinMessageRoom(currentUser.id, userId);
+    getMessages(userId)
+      .then((response) => {
+        setMessageList(response.data.messageList);
+        setUserProfile(response.data.userProfile);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return () => {
+      leaveMessageRoom(currentUser.id, userId);
+    };
+  }, [currentUser.id, userId]);
 
   useEffect(() => {
     if (chatBoxRef.current) {
