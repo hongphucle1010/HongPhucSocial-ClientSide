@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getChatList } from "../../../api/message";
+import { getChatList } from "../../../api/message/message";
 import { Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import MyLoading from "../../../components/MyLoading";

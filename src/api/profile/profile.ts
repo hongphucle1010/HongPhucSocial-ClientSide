@@ -1,5 +1,5 @@
-import { apiClient } from ".";
-import { updateAvatarPath } from "../config/apiPath";
+import { apiClient } from "..";
+import { updateAvatarPath } from "../../config/apiPath";
 
 export async function updateAvatarApi(formData: FormData) {
   try {

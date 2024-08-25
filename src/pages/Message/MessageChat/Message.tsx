@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { concatFirstAndLastName } from "../../../utils/functions";
 import { useParams } from "react-router-dom";
-import { getMessages } from "../../../api/message";
+import { getMessages } from "../../../api/message/message";
 import { useSelector } from "react-redux";
 import { joinMessageRoom, leaveMessageRoom } from "../../../socket.io/message";
 import { socket } from "../../../socket.io";

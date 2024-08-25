@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFriendsListApi } from "../../api/friendship";
+import { getFriendsListApi } from "../../api/friendship/friendship";
 import { Avatar, Button } from "flowbite-react";
 import { BiMessageRounded } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
-import { apiClient } from ".";
-import { updatePasswordPath, updateUserPath } from "../config/apiPath";
+import { apiClient } from "..";
+import { updatePasswordPath, updateUserPath } from "../../config/apiPath";
 
 export async function updateUserWithProfileApi(user: any) {
   try {

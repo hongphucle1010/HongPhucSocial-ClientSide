@@ -1,6 +1,6 @@
-import { getStatusPath, logInPath, signUpPath } from "../config/apiPath";
-import { getToken } from "../utils/authentication/authentication";
-import { apiClient } from ".";
+import { getStatusPath, logInPath, signUpPath } from "../../config/apiPath";
+import { getToken } from "../../utils/authentication/authentication";
+import { apiClient } from "..";
 
 function setAuthToken(token: string | null) {
   if (token) {

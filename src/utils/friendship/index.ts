@@ -1,4 +1,4 @@
-import { makeFriendshipRequestApi } from "../../api/friendship";
+import { makeFriendshipRequestApi } from "../../api/friendship/friendship";
 
 export async function makeFriendshipRequest(requesteeId: number) {
   try {

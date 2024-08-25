@@ -2,12 +2,12 @@ import { Avatar, Button, Dropdown, HR } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { concatFirstAndLastName } from "../../utils/functions";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProfileByUsernameApi } from "../../api/profile";
+import { getProfileByUsernameApi } from "../../api/profile/profile";
 import { useEffect, useState } from "react";
 import {
   deleteFriendshipRequestApi,
   makeFriendshipRequestApi,
-} from "../../api/friendship";
+} from "../../api/friendship/friendship";
 import { DELETE_FRIENDSHIP_SUCCESS } from "../../config/responseCode";
 import QRCodeComponent from "../../components/qrCode";
 

@@ -1,5 +1,5 @@
-import { updateAvatarApi } from "../../api/profile";
-import { updateUserWithProfileApi } from "../../api/user";
+import { updateAvatarApi } from "../../api/profile/profile";
+import { updateUserWithProfileApi } from "../../api/user/user";
 import {
   Authorization,
   logInReducer,

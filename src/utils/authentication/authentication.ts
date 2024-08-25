@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { getStatusApi, logInApi, signUpApi } from "../../api/authentication";
+import { getStatusApi, logInApi, signUpApi } from "../../api/authentication/authentication";
 import {
   logInReducer,
   logOutReducer,

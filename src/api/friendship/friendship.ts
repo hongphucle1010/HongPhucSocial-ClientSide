@@ -1,4 +1,5 @@
-import { apiClient } from ".";
+import { apiClient } from "..";
+import { FriendsList } from "./types";
 
 export async function makeFriendshipRequestApi(requesteeId: number) {
   try {
@@ -26,7 +27,7 @@ export async function deleteFriendshipRequestApi(requesteeId: number) {
 
 export async function getFriendsListApi() {
   try {
-    const response = await apiClient.get(`/friendship/list`);
+    const response = await apiClient.get<FriendsList>(`/friendship/list`);
     return response;
   } catch (error) {
     console.error(error);
