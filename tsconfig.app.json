@@ -7,6 +7,10 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    // "baseUrl": "./src", // Adjust the baseUrl to where your `types.d.ts` is located
+    // "paths": {
+    //   "*": ["types.d.ts"] // Optional, if you want to reference it without a full path
+    // },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

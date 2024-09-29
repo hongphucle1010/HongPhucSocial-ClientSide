@@ -14,14 +14,15 @@ const AvatarSection = ({
   const [openModal, setOpenModal] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
-    console.log(event.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
   useEffect(() => {
     if (file) {
-      const objectUrl = URL.createObjectURL(file as any);
+      const objectUrl = URL.createObjectURL(file);
       console.log(objectUrl);
     }
   }, [file]);

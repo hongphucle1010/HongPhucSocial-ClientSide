@@ -1,9 +1,13 @@
 import { apiClient } from "..";
 import { updateAvatarPath } from "../../config/apiPath";
+import { GetProfileResponse, UploadAvatarResponse } from "./types";
 
 export async function updateAvatarApi(formData: FormData) {
   try {
-    const response = await apiClient.post(updateAvatarPath, formData);
+    const response = await apiClient.post<UploadAvatarResponse>(
+      updateAvatarPath,
+      formData
+    );
     return response;
   } catch (error) {
     console.error(error);
@@ -16,7 +20,7 @@ export async function getProfileByUsernameApi(
   currentUserId?: number
 ) {
   try {
-    const response = await apiClient.get(
+    const response = await apiClient.get<GetProfileResponse>(
       `/profile/${username}${
         currentUserId ? `?currentUserId=${currentUserId}` : ""
       }`

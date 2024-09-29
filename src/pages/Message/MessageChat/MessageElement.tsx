@@ -8,7 +8,7 @@ export const LeftMessageElement = ({
   text,
   avatarUrl,
   username,
-}: any) => {
+}: LeftMessageElementProps) => {
   return (
     <div className="flex gap-2.5 w-5/6 sm:w-4/6">
       <Link to={`/profile/${username}`}>
@@ -33,7 +33,11 @@ export const LeftMessageElement = ({
   );
 };
 
-export const RightMessageElement = ({ date, text, avatarUrl }: any) => {
+export const RightMessageElement = ({
+  date,
+  text,
+  avatarUrl,
+}: RightMessageElementProps) => {
   return (
     <div className="flex gap-2.5 w-5/6 sm:w-4/6 self-end">
       <div className="flex flex-col w-full leading-1.5 p-4 border-gray-200 bg-blue-500 rounded-s-xl rounded-ee-xl dark:bg-blue-600">
@@ -49,3 +53,17 @@ export const RightMessageElement = ({ date, text, avatarUrl }: any) => {
     </div>
   );
 };
+
+interface LeftMessageElementProps {
+  name: string;
+  date: string;
+  text: string;
+  avatarUrl: string;
+  username: string;
+}
+
+interface RightMessageElementProps {
+  date: string;
+  text: string;
+  avatarUrl: string;
+}

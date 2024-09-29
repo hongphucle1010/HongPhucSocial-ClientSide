@@ -1,10 +1,11 @@
 import { apiClient } from "..";
 import { updatePasswordPath, updateUserPath } from "../../config/apiPath";
+import { UserWithProfile } from "./types";
 
 export async function updateUserWithProfileApi(user: any) {
   try {
     console.log(user);
-    const response = await apiClient.put(updateUserPath, user);
+    const response = await apiClient.put<UserWithProfile>(updateUserPath, user);
     console.log(response);
     return response;
   } catch (error) {
@@ -18,10 +19,13 @@ export async function updateUserPasswordApi(
   newPassword: string
 ) {
   try {
-    const response = await apiClient.put(updatePasswordPath, {
-      password,
-      newPassword,
-    });
+    const response = await apiClient.put<{ message: string }>(
+      updatePasswordPath,
+      {
+        password,
+        newPassword,
+      }
+    );
     return response;
   } catch (error) {
     console.error(error);

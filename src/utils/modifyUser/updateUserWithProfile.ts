@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { updateAvatarApi } from "../../api/profile/profile";
 import { updateUserWithProfileApi } from "../../api/user/user";
 import {
@@ -6,7 +7,7 @@ import {
   updateAvatar,
 } from "../../lib/redux/reducers/userState";
 
-export async function updateUserWithProfile(user: any, dispatch: any) {
+export async function updateUserWithProfile(user: any, dispatch: Dispatch) {
   try {
     const updatedUser = await updateUserWithProfileApi(user);
     dispatch(
@@ -23,7 +24,7 @@ export async function updateUserWithProfile(user: any, dispatch: any) {
   }
 }
 
-export async function updateUserAvatar(formData: FormData, dispatch: any) {
+export async function updateUserAvatar(formData: FormData, dispatch: Dispatch) {
   try {
     const response = await updateAvatarApi(formData);
     dispatch(updateAvatar(response.data.url));

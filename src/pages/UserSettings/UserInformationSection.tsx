@@ -85,7 +85,9 @@ const UserInformationSection = ({
             name="email"
             placeholder="hongphuc@hongphuc.vn"
             icon={HiMail}
-            onChange={(event: any) => setEmail(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setEmail(event.currentTarget.value)
+            }
             value={email}
             required
             shadow
@@ -100,7 +102,9 @@ const UserInformationSection = ({
             type="text"
             name="username"
             icon={HiUserCircle}
-            onChange={(event: any) => setUsername(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setUsername(event.currentTarget.value)
+            }
             value={username}
             placeholder="hongphuc"
             required
@@ -118,7 +122,9 @@ const UserInformationSection = ({
             icon={HiUserCircle}
             value={firstName}
             placeholder="Hong Phuc"
-            onChange={(event: any) => setFirstName(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setFirstName(event.currentTarget.value)
+            }
             required
             shadow
           />
@@ -132,7 +138,9 @@ const UserInformationSection = ({
             type="text"
             name="lastName"
             icon={HiUserCircle}
-            onChange={(event: any) => setLastName(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setLastName(event.currentTarget.value)
+            }
             value={lastName}
             placeholder="Le"
             required
@@ -148,7 +156,9 @@ const UserInformationSection = ({
             type="text"
             name="bio"
             icon={LuPencilLine}
-            onChange={(event: any) => setBio(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setBio(event.currentTarget.value)
+            }
             value={bio}
             placeholder="I am a developer"
             required

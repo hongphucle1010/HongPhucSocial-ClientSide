@@ -1,9 +1,10 @@
 import { apiClient } from "..";
-import { FriendsList } from "./types";
+import { ResponseWithMessage } from "../../lib/types/response";
+import { FriendshipResponse, FriendsList } from "./types";
 
 export async function makeFriendshipRequestApi(requesteeId: number) {
   try {
-    const response = await apiClient.post(`/friendship/`, {
+    const response = await apiClient.post<FriendshipResponse>(`/friendship/`, {
       requesteeId,
     });
     return response;
@@ -15,9 +16,12 @@ export async function makeFriendshipRequestApi(requesteeId: number) {
 
 export async function deleteFriendshipRequestApi(requesteeId: number) {
   try {
-    const response = await apiClient.delete(`/friendship/`, {
-      data: { id: requesteeId },
-    });
+    const response = await apiClient.delete<ResponseWithMessage>(
+      `/friendship/`,
+      {
+        data: { id: requesteeId },
+      }
+    );
     return response;
   } catch (error) {
     console.error(error);

@@ -10,8 +10,9 @@ import {
   joinMessageListRoom,
   leaveMessageListRoom,
 } from "../../../socket.io/message";
-import { ChatListProfile, MessageObject } from "../types";
+import { ChatListProfile } from "../types";
 import { convertTime } from "../../../utils/functions";
+import { MessageObject } from "../../../api/message/types";
 
 const ChatList = () => {
   const currentUser = useSelector((state: any) => state.userRole.value.user);

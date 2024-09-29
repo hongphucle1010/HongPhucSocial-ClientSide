@@ -1,6 +1,6 @@
 import { Alert } from "flowbite-react";
 
-const MyAlert = ({ color, onDismiss, content, isShow }: any) => {
+const MyAlert = ({ color, onDismiss, content, isShow }: MyAlertProps) => {
   return (
     <Alert
       color={color}
@@ -18,3 +18,10 @@ const MyAlert = ({ color, onDismiss, content, isShow }: any) => {
 };
 
 export default MyAlert;
+
+interface MyAlertProps {
+  color: string;
+  onDismiss: () => void;
+  content: string;
+  isShow: boolean;
+}

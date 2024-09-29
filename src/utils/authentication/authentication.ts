@@ -1,10 +1,16 @@
 import { Dispatch } from "redux";
-import { getStatusApi, logInApi, signUpApi } from "../../api/authentication/authentication";
+import {
+  getStatusApi,
+  logInApi,
+  signUpApi,
+} from "../../api/authentication/authentication";
 import {
   logInReducer,
   logOutReducer,
   Authorization,
 } from "../../lib/redux/reducers/userState";
+import { AxiosError } from "axios";
+import { HttpErrorResponse } from "../../lib/types/error";
 
 export function setToken(token: string) {
   console.log("Set token: ", token);
@@ -20,24 +26,17 @@ export async function logIn(
   password: string,
   dispatch: Dispatch
 ) {
-  try {
-    const response = await logInApi(email, password);
-    if (response?.status !== 200) {
-      throw new Error(response?.data.message);
-    }
-    setToken(response.data.token);
-    dispatch(
-      logInReducer({
-        user: response.data.user,
-        role: response.data.user.isAdmin
-          ? Authorization.ADMIN
-          : Authorization.USER,
-      })
-    );
-    return response;
-  } catch (error: Error | any) {
-    throw error.response;
-  }
+  const response = await logInApi(email, password);
+  setToken(response.data.token);
+  dispatch(
+    logInReducer({
+      user: response.data.user,
+      role: response.data.user.isAdmin
+        ? Authorization.ADMIN
+        : Authorization.USER,
+    })
+  );
+  return response;
 }
 
 export function logOut(dispatch: Dispatch) {
@@ -49,8 +48,11 @@ export async function signUp(email: string, password: string, name: string) {
   try {
     const response = await signUpApi(email, password, name);
     return response;
-  } catch (error: Error | any) {
-    return error.response;
+  } catch (error) {
+    const typedError = error as AxiosError<HttpErrorResponse>;
+    if (typedError.isAxiosError) {
+      throw typedError.response;
+    } else throw error;
   }
 }
 
@@ -61,7 +63,10 @@ export async function initStatus(dispatch: Dispatch) {
       logOut(dispatch);
     }
     return response;
-  } catch (error: Error | any) {
-    return error.response;
+  } catch (error) {
+    const typedError = error as AxiosError<HttpErrorResponse>;
+    if (typedError.isAxiosError) {
+      throw typedError.response;
+    } else throw error;
   }
 }

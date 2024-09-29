@@ -1,6 +1,7 @@
 import { getStatusPath, logInPath, signUpPath } from "../../config/apiPath";
 import { getToken } from "../../utils/authentication/authentication";
 import { apiClient } from "..";
+import { LogInResponse, SignUpResponse, StatusResponse } from "./types";
 
 function setAuthToken(token: string | null) {
   if (token) {
@@ -13,7 +14,7 @@ function setAuthToken(token: string | null) {
 export async function logInApi(email: string, password: string) {
   try {
     setAuthToken(getToken());
-    const response = await apiClient.post(logInPath, {
+    const response = await apiClient.post<LogInResponse>(logInPath, {
       email,
       password,
     });
@@ -30,7 +31,7 @@ export async function signUpApi(
   password: string
 ) {
   try {
-    const response = await apiClient.post(signUpPath, {
+    const response = await apiClient.post<SignUpResponse>(signUpPath, {
       email,
       username,
       password,
@@ -45,7 +46,7 @@ export async function signUpApi(
 export async function getStatusApi() {
   try {
     setAuthToken(getToken());
-    const response = await apiClient.get(getStatusPath);
+    const response = await apiClient.get<StatusResponse>(getStatusPath);
     return response;
   } catch (error) {
     console.error(error);

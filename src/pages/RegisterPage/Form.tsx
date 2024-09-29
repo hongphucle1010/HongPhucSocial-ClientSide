@@ -15,12 +15,14 @@ const SignUpForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const normalText = <span>Sign up</span>;
-  const {btnText, toggleLoading} = useLoadingSpinner(
+  const { btnText, toggleLoading } = useLoadingSpinner(
     normalText,
     <Spinner color="info" />
   );
 
-  const handleSignUp = async (event: any) => {
+  const handleSignUp = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
     toggleLoading();
     const warning = document.getElementById("warning") as HTMLParagraphElement;
@@ -61,7 +63,9 @@ const SignUpForm: React.FC = () => {
             icon={HiMail}
             required
             shadow
-            onChange={(event: any) => setEmail(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setEmail(event.currentTarget.value)
+            }
           />
         </div>
         <div>
@@ -76,7 +80,9 @@ const SignUpForm: React.FC = () => {
             icon={FaUser}
             required
             shadow
-            onChange={(event: any) => setUsername(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setUsername(event.currentTarget.value)
+            }
           />
         </div>
         <div>
@@ -104,14 +110,14 @@ const SignUpForm: React.FC = () => {
             icon={PiPassword}
             required
             shadow
-            onChange={(event: any) => setConfirmPassword(event.target.value)}
+            onChange={(event) => setConfirmPassword(event.target.value)}
           />
         </div>
         <div className="flex justify-center my-2">
           <Button
             gradientDuoTone="greenToBlue"
             type="submit"
-            onClick={(e: any) => handleSignUp(e)}
+            onClick={(e) => handleSignUp(e)}
           >
             {btnText}
           </Button>

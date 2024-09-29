@@ -8,9 +8,10 @@ import { concatFirstAndLastName } from "../../utils/functions";
 import { HiOutlineAdjustments, HiUserCircle } from "react-icons/hi";
 import { FaPeopleGroup, FaUsersViewfinder } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
+import { RootState } from "../../lib/redux/store";
 
 const Header: React.FC = () => {
-  const user = useSelector((state: any) => state.userRole.value.user);
+  const user = useSelector((state: RootState) => state.userRole.value.user);
   const navigate = useNavigate();
 
   return (
@@ -26,7 +27,7 @@ const Header: React.FC = () => {
         <Dropdown
           label={
             <Avatar
-              img={user.profile?.avatarUrl ? user.profile.avatarUrl : ""}
+              img={user?.profile?.avatarUrl ? user.profile.avatarUrl : ""}
               rounded
             />
           }
@@ -41,12 +42,12 @@ const Header: React.FC = () => {
             <HiUserCircle />
             <span className="block text-sm">
               <span className="cursor-pointer">
-                {user.profile?.firstName && user.profile?.lastName
+                {user?.profile?.firstName && user.profile?.lastName
                   ? concatFirstAndLastName(
                       user.profile.firstName ?? "",
                       user.profile.lastName ?? ""
                     ) || user.username
-                  : user.username}
+                  : user?.username}
               </span>
             </span>
           </Dropdown.Header>

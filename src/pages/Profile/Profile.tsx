@@ -10,8 +10,10 @@ import {
 } from "../../api/friendship/friendship";
 import { DELETE_FRIENDSHIP_SUCCESS } from "../../config/responseCode";
 import QRCodeComponent from "../../components/qrCode";
+import { FriendshipStatus } from "../../api/friendship/types";
+import { RootState } from "../../lib/redux/store";
 
-const enum FriendshipStatus {
+const enum Status {
   none = "none",
   pendingToBeAccepted = "pendingToBeAccepted",
   pendingToAccept = "pendingToAccept",
@@ -20,13 +22,17 @@ const enum FriendshipStatus {
 }
 
 const Profile = () => {
-  const currentUser = useSelector((state: any) => state.userRole.value.user);
+  const currentUser = useSelector(
+    (state: RootState) => state.userRole.value.user
+  );
   const navigate = useNavigate();
   const { username } = useParams();
 
   const [user, setUser] = useState(null as any);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
-  const [friendStatus, setFriendStatus] = useState(FriendshipStatus.none);
+  const [friendStatus, setFriendStatus] = useState<FriendshipStatus>(
+    Status.none
+  );
 
   const CurrentUserButton = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -47,7 +53,7 @@ const Profile = () => {
           My QR code
         </Button>
         <QRCodeComponent
-          value={currentUser.username}
+          value={currentUser?.username ?? ""}
           openModal={openModal}
           setOpenModal={setOpenModal}
         />
@@ -98,7 +104,7 @@ const Profile = () => {
     try {
       const response = await deleteFriendshipRequestApi(user.profile.userId);
       if (response.status === DELETE_FRIENDSHIP_SUCCESS)
-        setFriendStatus(FriendshipStatus.none);
+        setFriendStatus(Status.none);
     } catch (error) {
       console.error(error);
     }
@@ -122,11 +128,11 @@ const Profile = () => {
     if (!username) {
       setUser(currentUser);
       setIsCurrentUser(true);
-    } else if (username === currentUser.username) {
+    } else if (username === currentUser?.username) {
       setUser(currentUser);
       setIsCurrentUser(true);
     } else {
-      getProfileByUsernameApi(username, currentUser.id)
+      getProfileByUsernameApi(username, currentUser?.id)
         .then((res) => {
           if (!res.data.profile) {
             throw new Error("User not found");

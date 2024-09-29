@@ -7,6 +7,8 @@ import { useState } from "react";
 import { LOG_IN_SUCCESS } from "../../config/responseCode";
 import { useLoadingSpinner } from "../../hooks/loadingSpinner";
 import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
+import { HttpErrorResponse } from "../../lib/types/error";
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,12 +17,14 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState("");
 
   // const [btnText, setLoginBtnText] = useState<any>(<span>Log in</span>);
-  const {btnText, toggleLoading} = useLoadingSpinner(
+  const { btnText, toggleLoading } = useLoadingSpinner(
     <span>Log in</span>,
     <Spinner color="info" />
   );
 
-  const handleLogin = async (event: any) => {
+  const handleLogin = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
     toggleLoading();
     const warning = document.getElementById("warning") as HTMLParagraphElement;
@@ -32,7 +36,14 @@ const LoginForm: React.FC = () => {
         warning.innerText = "Invalid email or password";
       }
     } catch (error: Error | any) {
-      warning.innerText = error.data.message;
+      // warning.innerText = error.data.message;
+      const typedError = error as AxiosError<HttpErrorResponse>;
+      if (typedError.isAxiosError) {
+        warning.innerText =
+          typedError.response?.data.message ?? "An error occurred";
+      } else {
+        warning.innerText = "An error occurred";
+      }
     } finally {
       toggleLoading();
     }
@@ -57,7 +68,9 @@ const LoginForm: React.FC = () => {
             icon={HiMail}
             required
             shadow
-            onChange={(event: any) => setEmail(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setEmail(event.currentTarget.value)
+            }
           />
         </div>
         <div>
@@ -71,14 +84,16 @@ const LoginForm: React.FC = () => {
             icon={PiPassword}
             required
             shadow
-            onChange={(event: any) => setPassword(event.target.value)}
+            onChange={(event: React.FormEvent<HTMLInputElement>) =>
+              setPassword(event.currentTarget.value)
+            }
           />
         </div>
         <div className="flex justify-center my-2">
           <Button
             gradientDuoTone="greenToBlue"
             type="submit"
-            onClick={(event: any) => handleLogin(event)}
+            onClick={(event) => handleLogin(event)}
           >
             {btnText}
           </Button>

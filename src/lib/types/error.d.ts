@@ -1,4 +1,4 @@
-export interface ErrorResponse {
+export interface HttpErrorResponse {
   message: string;
   errors: Array<any> | undefined;
 }

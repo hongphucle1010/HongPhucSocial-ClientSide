@@ -9,7 +9,8 @@ import ScrollToBottomButton from "../../../components/ScrollToBottomButton";
 import { LeftMessageElement, RightMessageElement } from "./MessageElement";
 import MessageTypingArea from "./MessageTypingArea";
 import { SOCKET_RECEIVE_MESSAGE } from "../../../config/socketSignal";
-import { MessageObject } from "../types";
+import { MessageObject } from "../../../api/message/types";
+import { ProfileWithUsername } from "../../../api/profile/types";
 
 // Fake fetch function
 // const fetchOlderMessages = () => {
@@ -25,7 +26,9 @@ export default function Message() {
 
   const userId = parseInt(useParams().id as string);
   const currentUser = useSelector((state: any) => state.userRole.value.user);
-  const [userProfile, setUserProfile] = useState<any>({});
+  const [userProfile, setUserProfile] = useState<ProfileWithUsername | null>(
+    null
+  );
 
   if (isNaN(userId)) {
     throw new Error("Invalid user ID");
@@ -110,8 +113,8 @@ export default function Message() {
                     userProfile?.lastName || ""
                   )}
                   text={message.content}
-                  avatarUrl={userProfile?.avatarUrl}
-                  username={userProfile.user?.username}
+                  avatarUrl={userProfile?.avatarUrl ?? ""}
+                  username={userProfile?.user.username ?? ""}
                 />
               ) : (
                 <RightMessageElement

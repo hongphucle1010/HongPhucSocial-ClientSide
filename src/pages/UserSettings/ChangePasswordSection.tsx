@@ -4,7 +4,10 @@ import Title from "./UserSettingsTitle";
 import { updatePassword } from "../../utils/modifyUser/updatePassword";
 import { useState } from "react";
 
-const ChangePassword = ({ setAlertContent, setShowAlert }: any) => {
+const ChangePassword = ({
+  setAlertContent,
+  setShowAlert,
+}: ChangePasswordProps) => {
   const [openModal, setOpenModal] = useState(false);
 
   const [password, setPassword] = useState("");
@@ -105,7 +108,7 @@ const ChangePassword = ({ setAlertContent, setShowAlert }: any) => {
   return (
     <div className="px-3">
       <Title title="Change password" setOpenModal={setOpenModal} />
-      <MyModal  
+      <MyModal
         header="Change password"
         body={form()}
         handleChange={handleUpdate}
@@ -118,3 +121,8 @@ const ChangePassword = ({ setAlertContent, setShowAlert }: any) => {
 };
 
 export default ChangePassword;
+
+interface ChangePasswordProps {
+  setAlertContent: (content: any) => void;
+  setShowAlert: (show: boolean) => void;
+}

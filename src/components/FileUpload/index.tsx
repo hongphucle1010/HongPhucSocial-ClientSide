@@ -1,7 +1,11 @@
 import { Avatar, FileInput, Label } from "flowbite-react";
 import { useEffect, useState } from "react";
 
-const FileUploadComponent = ({ handleFileChange, fileType, file }: any) => {
+const FileUploadComponent = ({
+  handleFileChange,
+  fileType,
+  file,
+}: FileUploadProps) => {
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
@@ -60,3 +64,9 @@ const FileUploadComponent = ({ handleFileChange, fileType, file }: any) => {
 };
 
 export default FileUploadComponent;
+
+interface FileUploadProps {
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  fileType: string;
+  file: File | null;
+}
